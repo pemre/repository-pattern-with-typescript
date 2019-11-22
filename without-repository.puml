@@ -1,0 +1,89 @@
+@startuml
+
+hide empty members
+
+title App without repository
+
+package "App" as app <<Rectangle>> {
+
+    class AppController
+
+    ' ===== Models ==================
+
+    class "Customer" as cust {
+        -name
+        -age
+        +getName()
+        +getAge()
+    }
+
+    class "Restaurant" as rest {
+      -name
+      -city
+    }
+
+    ' ===== Controllers ==================
+
+    class "Restaurant Controller" as contRest {
+        +add()
+        +findBy()
+        +getByCity()
+    }
+    note left: Change me!
+
+    class "Customer Controller" as contCust {
+        +add()
+        +getAll()
+        +getOldest()
+    }
+    note right: Change me!
+}
+
+' ===== Subjects to change ==================
+
+package "Subjects to change" <<Rectangle>> {
+
+    database "\nData\n" as db {
+    }
+
+    class "DummyQL Connector" as connectorDummyQL {
+        +addTable()
+        --
+        +C create()
+        +R read()
+        +U update()
+        +D delete()
+        --
+        +all()
+        +count()
+    }
+
+    class "MySQL Connector" as connectorMySQL {
+    }
+
+    class "MongoDB Connector" as connectorMongoDB {
+    }
+}
+
+' ===== Relationships ==================
+
+AppController --> contRest
+AppController --> contCust
+rest --> contRest
+cust --> contCust
+contRest --> connectorDummyQL
+contCust --> connectorDummyQL
+connectorDummyQL -down-> db
+
+'---------------------------------------------
+'In the future we may need different databases
+'---------------------------------------------
+contCust .down.> connectorMySQL
+contRest .down.> connectorMySQL
+contCust .down.> connectorMongoDB
+contRest .down.> connectorMongoDB
+connectorMySQL .down.> db
+connectorMongoDB .down.> db
+'---------------------------------------------
+
+@enduml
