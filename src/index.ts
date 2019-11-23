@@ -1,47 +1,9 @@
-// eslint-disable-next-line max-classes-per-file
 import { Customer } from './models/customer';
 import { Restaurant } from './models/restaurant';
+import { CustomerRepository } from './repositories/customer';
+import { RestaurantRepository } from './repositories/restaurant';
 import { DummyQLConnector } from './lib/dummyql-connector';
 import { log } from './lib/helpers';
-
-/**
- * Repositories
- */
-
-export abstract class BaseRepository<T> {
-  constructor(private db: DummyQLConnector, private repoName: string) {
-    this.db.addTable(this.repoName);
-  }
-
-  add(item: T): boolean {
-    return this.db.create(this.repoName, item);
-  }
-
-  getAll(): Array<T> {
-    return this.db.all(this.repoName);
-  }
-
-  findBy(criteria, value): Array<T> {
-    const returnOnlyFirstOne = false;
-    return this.db.read(this.repoName, criteria, value, returnOnlyFirstOne);
-  }
-}
-
-export class CustomerRepository extends BaseRepository<Customer> {
-  // Here we can create db related methods of this repo
-  getOldest(): Customer {
-    return this
-      .getAll()
-      .reduce((l, e) => (e.getAge() > l.getAge() ? e : l));
-  }
-}
-
-export class RestaurantRepository extends BaseRepository<Restaurant> {
-  // Here we can create db related methods of this repo
-  getByCity(name: string): Array<Restaurant> {
-    return this.findBy('city', name);
-  }
-}
 
 /**
  * The App
