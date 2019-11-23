@@ -1,61 +1,62 @@
-import { DummyQLConnector } from './lib/dummyql-connector'
-import { Customer } from './models/customer'
-import { Restaurant } from './models/restaurant'
+// eslint-disable-next-line max-classes-per-file
+import { Customer } from './models/customer';
+import { Restaurant } from './models/restaurant';
+import { DummyQLConnector } from './lib/dummyql-connector';
+import { log } from './lib/helpers';
 
 /**
  * Controllers
  */
 
-export class CustomerController<Customer> {
-    public readonly db;
-    private readonly table;
+export class CustomerController {
+  public readonly db;
 
-    constructor(db: DummyQLConnector) {
-        this.db = db;
-        this.table = 'customer';
-        this.db.addTable(this.table);
-    }
+  private readonly table;
 
-    add(customer: Customer): boolean {
-        const result = this.db.create(this.table, customer);
-        return result;
-    }
+  constructor(db: DummyQLConnector) {
+    this.db = db;
+    this.table = 'customer';
+    this.db.addTable(this.table);
+  }
 
-    getAll(): Array<Customer> {
-        return this.db.all(this.table);
-    }
+  add(customer: Customer): boolean {
+    return this.db.create(this.table, customer);
+  }
 
-    // Here we can create db related methods of this repo
-    getOldest(): Customer {
-        return this
-            .getAll()
-            .reduce((l, e) => e.getAge() > l.getAge() ? e : l);
-    }
+  getAll(): Array<Customer> {
+    return this.db.all(this.table);
+  }
+
+  getOldest(): Customer {
+    return this
+      .getAll()
+      .reduce((l, e) => (e.getAge() > l.getAge() ? e : l));
+  }
 }
 
-export class RestaurantController<Restaurant> {
-    public readonly db;
-    private readonly table;
+export class RestaurantController {
+  public readonly db;
 
-    constructor(db: DummyQLConnector) {
-        this.db = db;
-        this.table = 'customer';
-        this.db.addTable(this.table);
-    }
+  private readonly table;
 
-    add(restaurant: Restaurant): boolean {
-        const result = this.db.create(this.table, restaurant);
-        return result;
-    }
+  constructor(db: DummyQLConnector) {
+    this.db = db;
+    this.table = 'customer';
+    this.db.addTable(this.table);
+  }
 
-    findBy(criteria, value): Array<Restaurant> {
-        const returnOnlyFirstOne = false;
-        return this.db.read(this.table, criteria, value, returnOnlyFirstOne);
-    }
+  add(restaurant: Restaurant): boolean {
+    return this.db.create(this.table, restaurant);
+  }
 
-    getByCity(name: string): Array<Restaurant> {
-        return this.findBy('city', name);
-    }
+  findBy(criteria: string, value: string): Array<Restaurant> {
+    const returnOnlyFirstOne = false;
+    return this.db.read(this.table, criteria, value, returnOnlyFirstOne);
+  }
+
+  getByCity(name: string): Array<Restaurant> {
+    return this.findBy('city', name);
+  }
 }
 
 /**
@@ -65,68 +66,49 @@ export class RestaurantController<Restaurant> {
  */
 
 class App {
-    constructor() {
-        // Connecting to database
-        const db = new DummyQLConnector();
+  constructor() {
+    // Connect to database
+    const db = new DummyQLConnector();
 
-        /**
-         * Use CustomerController
-         */
+    /**
+     * Use CustomerController
+     */
 
-        const contCustomer = new CustomerController(db);
+    const contCustomer = new CustomerController(db);
 
-        // Call create() method from BaseRepository
-        const resultOne = contCustomer.add(new Customer('Alice', 32));
-        console.log(`Customer added with ${resultOne ? 'success' : 'fail'}`);
+    // Call create() method from BaseRepository
+    const resultOne = contCustomer.add(new Customer('Alice', 32));
+    log(`Customer added with ${resultOne ? 'success' : 'fail'}`);
 
-        contCustomer.add(new Customer('Bob', 16));
-        contCustomer.add(new Customer('Carol', 48));
-        contCustomer.add(new Customer('Dave', 24));
+    contCustomer.add(new Customer('Bob', 16));
+    contCustomer.add(new Customer('Carol', 48));
+    contCustomer.add(new Customer('Dave', 24));
 
-        // Call a specific method from CustomerController
-        const customerOldest = contCustomer.getOldest();
-        console.log(`The oldest customer is ${customerOldest.getName()}: Age ${customerOldest.getAge()}`);
+    // Call a specific method from CustomerController
+    const customerOldest = contCustomer.getOldest();
+    log(`The oldest customer is ${customerOldest.getName()}: Age ${customerOldest.getAge()}`);
 
-        /**
-         * Use RestaurantController
-         */
+    /**
+     * Use RestaurantController
+     */
 
-        const contRestaurant = new RestaurantController(db);
+    const contRestaurant = new RestaurantController(db);
 
-        const resultTwo = contRestaurant.add(new Restaurant('Ana', 'Istanbul'));
-        console.log(`Restaurant added with ${resultTwo ? 'success' : 'fail'}`);
+    const resultTwo = contRestaurant.add(new Restaurant('Ana', 'Istanbul'));
+    log(`Restaurant added with ${resultTwo ? 'success' : 'fail'}`);
 
-        contRestaurant.add(new Restaurant('Bogazici', 'Istanbul'));
-        contRestaurant.add(new Restaurant('Cumhuriyet', 'Ankara'));
-        contRestaurant.add(new Restaurant('Deniz', 'Istanbul'));
+    contRestaurant.add(new Restaurant('Bogazici', 'Istanbul'));
+    contRestaurant.add(new Restaurant('Cumhuriyet', 'Ankara'));
+    contRestaurant.add(new Restaurant('Deniz', 'Istanbul'));
 
-        const restaurantsInIstanbul = contRestaurant.getByCity('Istanbul');
-        console.log(`Restaurants in Istanbul:`, restaurantsInIstanbul);
-
-        this.renderSomething();
-    }
-
-    renderSomething() {
-        document.getElementById('app').innerHTML = `
-            <h1>Repository Pattern with Typescript</h1>
-            <div>
-              Please check console log!
-              Click
-              <a
-                  href="https://github.com/pemre/repository-pattern-with-typescript"
-                  target="_blank"
-                  rel="noopener noreferrer"
-              >
-                  here
-              </a>
-              for more info about this tutorial.
-            </div>
-        `;
-    }
+    const restaurantsInIstanbul = contRestaurant.getByCity('Istanbul');
+    log('Restaurants in Istanbul:', restaurantsInIstanbul);
+  }
 }
 
 /**
  * Initialize The App
  */
 
-const app = new App();
+// eslint-disable-next-line no-new
+new App();
