@@ -1,6 +1,8 @@
-import { DummyQLConnector } from './lib/dummyql-connector';
+// eslint-disable-next-line max-classes-per-file
 import { Customer } from './models/customer';
 import { Restaurant } from './models/restaurant';
+import { DummyQLConnector } from './lib/dummyql-connector';
+import { log } from './lib/helpers';
 
 /**
  * Repositories
@@ -40,13 +42,6 @@ export class RestaurantRepository extends BaseRepository<Restaurant> {
     return this.findBy('city', name);
   }
 }
-
-const log = (message: string, value: any = '') => {
-  console.log(message, value);
-  document
-    .querySelector('.logs')
-    .insertAdjacentHTML('beforeend', `<li>${message} ${value}</li>`);
-};
 
 /**
  * The App
