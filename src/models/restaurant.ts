@@ -1,9 +1,10 @@
 export class Restaurant {
-    private name: string;
-    private city: string;
+  private name: string;
 
-    constructor(name: string, city: string) {
-        this.name = name;
-        this.city = city;
-    }
+  private city: string;
+
+  constructor(name: string, city: string) {
+    this.name = name;
+    this.city = city;
+  }
 }
