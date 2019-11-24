@@ -1,26 +1,29 @@
-name: Node CI
+name: Install, Build, Test and Deploy to GitHub Pages
 
-on: [push]
+on:
+  push:
+    branches:
+      - master
 
 jobs:
-  build:
-
+  build-and-deploy:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [12.x]
-
     steps:
-    - uses: actions/checkout@v1
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: npm install, build, and test
-      run: |
-        npm i
-        npm run build
-        npm test
-      env:
-        CI: true
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '13.x'
+
+      - name: Install, Test and Build
+        run: npm i && npm test && npm run build
+
+      - name: Deploy to pages
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          BASE_BRANCH: master # The branch the action should deploy from.
+          BRANCH: gh-pages # The branch the action should deploy to.
+          FOLDER: dist
