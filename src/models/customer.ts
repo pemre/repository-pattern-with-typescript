@@ -1,18 +1,18 @@
 export class Customer {
-  private age: number;
+  private readonly age: number;
 
-  private name: string;
+  private readonly name: string;
 
   constructor(name: string, age: number) {
     this.age = age;
     this.name = name;
   }
 
-  getName() {
+  getName(): string {
     return this.name;
   }
 
-  getAge() {
+  getAge(): number {
     return this.age;
   }
 }

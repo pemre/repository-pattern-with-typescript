@@ -9,12 +9,11 @@ export abstract class BaseRepository<T> {
     return this.db.create(this.repoName, item);
   }
 
-  getAll(): Array<T> {
-    return this.db.all(this.repoName);
+  findBy(criteria: string, value: number | string): Array<T> {
+    return this.db.read(this.repoName, criteria, value);
   }
 
-  findBy(criteria, value): Array<T> {
-    const returnOnlyFirstOne = false;
-    return this.db.read(this.repoName, criteria, value, returnOnlyFirstOne);
+  getAll(): Array<T> {
+    return this.db.all(this.repoName);
   }
 }

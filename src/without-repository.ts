@@ -77,12 +77,12 @@ class App {
     const contCustomer = new CustomerController(db);
 
     // Call create() method from BaseRepository
-    const resultOne = contCustomer.add(new Customer('Alice', 32));
+    const resultOne = contCustomer.add(new Customer('Ali', 32));
     log(`Customer added with ${resultOne ? 'success' : 'fail'}`);
 
-    contCustomer.add(new Customer('Bob', 16));
-    contCustomer.add(new Customer('Carol', 48));
-    contCustomer.add(new Customer('Dave', 24));
+    contCustomer.add(new Customer('Baris', 16));
+    contCustomer.add(new Customer('Canan', 48));
+    contCustomer.add(new Customer('Damla', 24));
 
     // Call a specific method from CustomerController
     const customerOldest = contCustomer.getOldest();

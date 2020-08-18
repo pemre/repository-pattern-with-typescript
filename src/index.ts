@@ -23,12 +23,12 @@ class App {
     const repoCustomer = new CustomerRepository(db, 'customer');
 
     // Call create() method from BaseRepository
-    const resultOne = repoCustomer.add(new Customer('Alice', 32));
+    const resultOne = repoCustomer.add(new Customer('Ali', 32));
     log(`Customer added with ${resultOne ? 'success' : 'fail'}`);
 
-    repoCustomer.add(new Customer('Bob', 16));
-    repoCustomer.add(new Customer('Carol', 48));
-    repoCustomer.add(new Customer('Dave', 24));
+    repoCustomer.add(new Customer('Baris', 16));
+    repoCustomer.add(new Customer('Canan', 48));
+    repoCustomer.add(new Customer('Damla', 24));
 
     // Call a specific method from CustomerRepository
     const customerOldest = repoCustomer.getOldest();

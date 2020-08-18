@@ -1,4 +1,4 @@
-export const log = (message: string, value: any = '') => {
+export const log = (message: string, value: unknown = ''): void => {
   console.log(message, value);
   document
     .querySelector('.logs')
