@@ -1,6 +1,6 @@
 {
   "name": "repository-pattern-with-typescript",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Example repository to demo Repository Pattern with Typescript",
   "author": "Emre Piskin <piskin.emre@gmail.com>",
   "license": "GPL-3.0",
