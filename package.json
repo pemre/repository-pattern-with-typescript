@@ -1,6 +1,6 @@
 {
   "name": "repository-pattern-with-typescript",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "Example repository to demo Repository Pattern with Typescript",
   "author": "Emre Piskin <piskin.emre@gmail.com>",
   "license": "GPL-3.0",
@@ -14,14 +14,14 @@
     "build": "parcel build index.html --public-url ./",
     "test": "eslint '**/*.ts'"
   },
-  "dependencies": {},
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^4.26.0",
-    "@typescript-eslint/parser": "^4.26.0",
-    "eslint": "^7.28.0",
-    "eslint-config-airbnb-typescript": "^12.3.1",
-    "eslint-plugin-import": "^2.23.4",
+    "@typescript-eslint/eslint-plugin": "^5.36.2",
+    "@typescript-eslint/parser": "^5.36.2",
+    "eslint": "^8.23.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
     "parcel-bundler": "^1.12.5",
-    "typescript": "^4.3.2"
+    "typescript": "^4.8.3"
   }
 }
