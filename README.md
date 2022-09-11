@@ -9,3 +9,15 @@
 Example repository to demonstrate Repository Pattern with TypeScript.
 
 See [demo page](https://pemre.github.io/repository-pattern-with-typescript/).
+
+## Original state
+
+![](./without-repository-before.png)
+
+## The requirement
+
+![](./without-repository-after.png)
+
+## Final state
+
+![](./with-repository.png)
